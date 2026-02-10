@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+passlib
+python-jose
+python-multipart
+psycopg2-binary
+bcrypt
+fastapi-mail
