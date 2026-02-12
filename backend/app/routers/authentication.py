@@ -15,6 +15,6 @@ def login(request:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(databas
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Incorrect pasword")
     if not user.isActive:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="inactive User")
-    accessToken=token.create_access_token(data={"sub": user.email,"role": user.role})
+    accessToken=token.create_access_token(data={"user_id":user.id})
     return {"access_token":accessToken,"token_type":"bearer"}
 

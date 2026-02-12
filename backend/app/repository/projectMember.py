@@ -15,7 +15,7 @@ def add_member(db:Session,project_id:int,user_id:int,role:str):
     db.refresh(member)
     return member 
 
-def get_project_members(db:Session,project_id:int):
+def get_project_members(db:Session,project_id:int): 
     return db.query(ProjectMember).filter(ProjectMember.project_id==project_id)
 
 def update_project_member(db:Session,project_id:int,user_id:int,role:str):

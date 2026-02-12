@@ -14,8 +14,7 @@ async def forgot_password(email:str,db:Session):
     return {"message":"Password reset link sent to mail"}
 
 def reset_password(tokenStr:str,newPassword:str,db:Session):
-    data=token.verify_token(tokenStr,HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token"))
-    email=data["email"]
+    email = token.verify_reset_token(tokenStr,HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid token"))
     user=db.query(models.User).filter(models.User.email==email).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="No User found")
