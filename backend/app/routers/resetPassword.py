@@ -10,4 +10,4 @@ async def forgot_password(request:schemas.ForgotPassword,db:Session=Depends(data
 
 @router.post("/resetpassword")
 def reset_password(request:schemas.ResetPassword,db:Session=Depends(database.get_db)):
-    return resetPassword.reset_password(request.token,request.newPassword,db) 
+    return resetPassword.reset_password(request.email,request.otp,request.newPassword,db) 

@@ -14,9 +14,10 @@ def get_issue(db:Session,issue_id:int):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Issue not found")
     return issue
 
-def assign_issue(db:Session,issue_id:int,user_id:int):
+def assign_issue(db:Session,issue_id:int,user_id:int,priority:str):
     issue=get_issue(db,issue_id)
     issue.assigned_to=user_id
+    issue.priority=priority
     issue.status=IssueStatus.Assigned
     db.commit()
     db.refresh(issue)

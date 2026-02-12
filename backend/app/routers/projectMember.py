@@ -3,14 +3,14 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..schemas import AddMember, MemberResponse,MemberUpdate
 from ..repository import projectMember
-from ..oauth2 import admin_only
+from ..oauth2 import admin_only,project_member_only
 router=APIRouter(prefix="/projects",tags=["Project Members"])
 @router.post("/{project_id}/members",response_model=MemberResponse)
 def add_project_member(project_id: int,request: AddMember,db: Session = Depends(get_db),admin = Depends(admin_only)):
     return projectMember.add_member(db,project_id,request.user_id,request.role)
 
 @router.get("/{project_id}/members",response_model=list[MemberResponse])
-def view_members(project_id:int,db:Session=Depends(get_db),admin=Depends(admin_only)):
+def view_members(project_id:int,db:Session=Depends(get_db),admin=Depends(project_member_only)):
     return projectMember.get_project_members(db, project_id)
 
 @router.put("/{project_id}/members")

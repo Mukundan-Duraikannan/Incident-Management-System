@@ -1,6 +1,13 @@
 from pydantic import BaseModel 
 from typing import Optional
 from .models import IssueStatus
+from enum import Enum
+class PriorityEnum(str,Enum):
+    low="low"
+    medium="medium"
+    high="high"
+    critical="critical"
+
 class IssueCreate(BaseModel):
     title:str 
     description:str 
@@ -9,6 +16,7 @@ class IssueCreate(BaseModel):
 class IssueAssign(BaseModel):
     user_id:int 
     manager_id:int
+    priority:PriorityEnum
 
 class IssueStatusUpdate(BaseModel):
     status:IssueStatus 

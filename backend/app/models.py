@@ -11,7 +11,8 @@ class User(Base):
     password=Column(String)
     isActive=Column(Boolean,default=True)
     role=Column(String,default="user")
-
+    reset_otp=Column(String)
+    otp_expiry=Column(DateTime)
 
 class Project(Base):
     __tablename__ = "projects"
@@ -47,3 +48,6 @@ class Issue(Base):
     raised_by=Column(Integer,ForeignKey("users.id"))
     assigned_to=Column(Integer,ForeignKey("users.id"),nullable=True)
     created_at=Column(DateTime,default=datetime.utcnow)
+    priority=Column(String,default="low")
+    
+    

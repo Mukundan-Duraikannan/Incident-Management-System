@@ -25,8 +25,12 @@ class Login(BaseModel):
 class ForgotPassword(BaseModel):
     email:str
 
+class VerifyOTP(BaseModel):
+    email:str 
+    otp:str
 class ResetPassword(BaseModel):
-    token:str
+    email:str
+    otp:str
     newPassword:str
 
 class Token(BaseModel):
