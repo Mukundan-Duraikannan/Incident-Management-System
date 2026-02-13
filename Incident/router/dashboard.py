@@ -1,7 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import getdb
+<<<<<<< HEAD
 from datetime import datetime
+=======
+
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
 from models.project import Project
 from models.project_member import ProjectMember
 from models.user import User
@@ -13,7 +17,11 @@ router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 @router.get("/admin/{admin_id}")
 def admin_dashboard(admin_id: int, db: Session = Depends(getdb)):
 
+<<<<<<< HEAD
     projects = db.query(Project).filter(Project.admin_id == admin_id).all()
+=======
+    projects = db.query(Project).filter(admin_id == admin_id).all()
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
 
     result = []
 
@@ -29,6 +37,7 @@ def admin_dashboard(admin_id: int, db: Session = Depends(getdb)):
                 "name": user.name,
                 "role": member.role
             })
+<<<<<<< HEAD
             
         issues = db.query(Issue).filter(Issue.project_id==project.id).all()
         issue_data=[]
@@ -71,6 +80,13 @@ def admin_dashboard(admin_id: int, db: Session = Depends(getdb)):
             "project_name": project.name,
             "team_members": team,
              "issues":issue_data
+=======
+
+        result.append({
+            "project_id": project.id,
+            "project_name": project.name,
+            "team_members": team
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
         })
 
     return {
@@ -82,8 +98,19 @@ def admin_dashboard(admin_id: int, db: Session = Depends(getdb)):
 @router.get("/manager/{manager_id}")
 def manager_dashboard(manager_id: int, db: Session = Depends(getdb)):
 
+<<<<<<< HEAD
     projects = (db.query(Project).join(ProjectMember).filter(ProjectMember.user_id == manager_id,ProjectMember.role.ilike("manager")
         ).all()
+=======
+    projects = (
+        db.query(Project)
+        .join(ProjectMember)
+        .filter(
+            ProjectMember.user_id == manager_id,
+            ProjectMember.role.ilike("manager")
+        )
+        .all()
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
     )
 
     data = []

@@ -2,7 +2,10 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from database import getdb
+<<<<<<< HEAD
 from datetime import datetime
+=======
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
 from models.notification import Notification
 from models.issue import Issue, IssueStatus
 from models.issue_activity_log import IssueActivityLog
@@ -125,9 +128,12 @@ def update_status(issue_id: int, request: IssueStatusUpdate, db: Session = Depen
     
     old_status = issue.status
     issue.status = request.status
+<<<<<<< HEAD
     
     if request.status == IssueStatus.Closed:
         issue.closed_at = datetime.utcnow()
+=======
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
 
     db.commit()
     db.refresh(issue)

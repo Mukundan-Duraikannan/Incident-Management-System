@@ -38,4 +38,7 @@ class Issue(Base):
     handled_by_manager = Column(Integer, ForeignKey("users.id"), nullable=True)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+<<<<<<< HEAD
     closed_at = Column(DateTime,nullable=True)
+=======
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
