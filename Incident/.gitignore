@@ -1,0 +1,18 @@
+# Virtual Environment
+Incident/
+venv/
+env/
+Lib/
+Scripts/
+__pycache__/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
