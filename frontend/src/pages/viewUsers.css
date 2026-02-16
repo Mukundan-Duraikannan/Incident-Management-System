@@ -1,0 +1,81 @@
+.users-container {
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3e9adf, #f5f7fa);
+}
+
+.users-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  color: #2c3e50;
+}
+
+.users-table {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.users-table th,
+.users-table td {
+  padding: 15px;
+  text-align: center;
+}
+
+.users-table th {
+  background-color: #4e73df;
+  color: white;
+}
+
+.users-table tr {
+  background-color: #f8f9fc;
+}
+
+.remove-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e74a3b;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+
+.button{
+   
+color: "white";
+padding: "6px 12px";
+border: "none";
+border-radius: "5px";
+cursor: "pointer";
+}
+
+.search-section{
+  margin-bottom:10px;
+  
+}
+.search-section input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 500px;
+  font-size: 14px;
+  margin-left:350px;
+}
+
+.search-section button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-left:5px;
+}

@@ -1,6 +1,5 @@
 from fastapi import HTTPException,Depends,status
 from sqlalchemy.orm import Session
-from .import models 
 from .import database
 from .models import ProjectMember
 from .oauth2 import get_current_user

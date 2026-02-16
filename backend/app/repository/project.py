@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from ..models import Project
+from ..models import Project,ProjectMember
 from fastapi import HTTPException,status
 
 def create_project(db:Session,name:str,description:str):
@@ -9,8 +9,13 @@ def create_project(db:Session,name:str,description:str):
     db.refresh(project)
     return project
 
-def get_all_projects(db:Session):
-    return db.query(Project).all()
+#def get_all_projects(db:Session):
+#    return db.query(Project).all()
+def get_projects(db:Session,user):
+    if user.role.lower()=="admin":
+        return db.query(Project).all()
+    projects=(db.query(Project).join(ProjectMember,Project.id==ProjectMember.project_id).filter(ProjectMember.user_id==user.id).all())
+    return projects
 
 def update_project(db:Session,id:int,name:str,description:str):
     project=db.query(Project).filter(Project.id==id).first()

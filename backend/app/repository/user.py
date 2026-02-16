@@ -1,8 +1,12 @@
 from .. import models,schemas
+from ..hashing import Hash
 from sqlalchemy.orm import Session
 from fastapi import HTTPException,status
 def create_user(request: schemas.User, db: Session):
-    user = models.User(name=request.name,email=request.email,password="")
+    exist=db.query(models.User).filter(models.User.email==request.email).first()
+    if exist:
+        raise HTTPException(status_code=400,detail="Email already registered")
+    user = models.User(name=request.name,email=request.email,password="",role=request.role)
     db.add(user)
     db.commit()
     db.refresh(user)

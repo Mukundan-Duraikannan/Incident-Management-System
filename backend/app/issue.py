@@ -11,7 +11,6 @@ class PriorityEnum(str,Enum):
 class IssueCreate(BaseModel):
     title:str 
     description:str 
-    project_id:int
 
 class IssueAssign(BaseModel):
     user_id:int 

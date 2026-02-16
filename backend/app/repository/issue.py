@@ -1,12 +1,15 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException,status
 from .. models import Issue,IssueStatus
-def create_issue(db:Session,data,user_id:int):
-    issue=Issue(title=data.title,description=data.description,project_id=data.project_id,raised_by=user_id)
+def create_issue(db:Session,data,project_id:int,user_id:int):
+    issue=Issue(title=data.title,description=data.description,project_id=project_id,raised_by=user_id)
     db.add(issue)
     db.commit()
     db.refresh(issue)
     return issue
+
+def get_all_issues(db:Session):
+    return db.query(Issue).all()
 
 def get_issue(db:Session,issue_id:int):
     issue=db.query(Issue).filter(Issue.id==issue_id).first()

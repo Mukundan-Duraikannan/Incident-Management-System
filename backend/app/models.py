@@ -21,7 +21,6 @@ class Project(Base):
     name=Column(String,nullable=False)
     description=Column(Text)
 
-##update
 class ProjectMember(Base):
     __tablename__="project_members"
 

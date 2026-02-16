@@ -5,6 +5,7 @@ class User(BaseModel):
     name:str
     email:str
     password:str
+    role:str="user"
 
 class ShowUser(BaseModel):
     id:int
@@ -55,9 +56,7 @@ class ProjectResponse(BaseModel):
 
     class Config:
         from_attributes=True
-
-##update
-
+        
 class AddMember(BaseModel):
     user_id:int
     role:str 

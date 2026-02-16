@@ -11,6 +11,7 @@ conf=ConnectionConfig(MAIL_USERNAME=settings.ADMIN_EMAIL,
 
 async def send_reset_mail(email:str,otp:str):
     msg=MessageSchema(subject="Reset password",recipients=[email],
-    body=f"Hi,Change password here {otp}.This otp expires in 10 minutes.",subtype="plain")
+    body=f"Hi,Here is the OTP to reset password {otp}.This otp expires in 10 minutes."
+    f"Change password here: http://localhost:5173/reset-password",subtype="plain")
     fastMail=FastMail(conf)
     await fastMail.send_message(msg)

@@ -12,7 +12,7 @@ def create_project(request:ProjectCreate,db:Session=Depends(database.get_db),adm
 
 @router.get("/",response_model=list[ProjectResponse])
 def get_projects(db:Session=Depends(database.get_db),user=Depends(get_current_user)):
-    return project.get_all_projects(db)
+    return project.get_projects(db,user)
 
 @router.put("/{id}",response_model=ProjectResponse)
 def update_project(id:int,request:ProjectUpdate,db:Session=Depends(database.get_db),admin=Depends(admin_only)):
@@ -20,4 +20,4 @@ def update_project(id:int,request:ProjectUpdate,db:Session=Depends(database.get_
 
 @router.delete("/{id}")
 def delete_project(id:int,db:Session=Depends(database.get_db),admin=Depends(admin_only)):
-    return project.delete_project(db,id)
+    return project.delete_project(db,id)            

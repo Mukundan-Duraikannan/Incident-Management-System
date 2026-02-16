@@ -1,0 +1,73 @@
+.button{
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;   
+    border-radius: 5px; 
+    width: 400px;  
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+.button:hover{
+    background-color: darkblue;
+}
+.login-font{
+    font-size: 40px;
+  text-align: center; 
+}
+.label-font{
+    font-size: 20px;
+    color: #374151;
+    
+}
+.input-font{
+    padding: 12px;
+  font-size: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  width: 90%;
+  margin: 8px;
+  
+} 
+
+.div-elements{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+   background: linear-gradient(135deg, #3e9adf, #f5f7fa);
+}
+.box{
+   width: 420px;
+  background-color: #ffffff;
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    
+}
+.user-icon{
+    width: 70px;
+    height: 70px;
+    margin-left: 40%;
+  
+}
+.options {
+   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin: 15px 0 25px;
+}
+
+.options .p {
+  text-decoration: none;
+  color: #2563eb;
+  font-size: 20px;
+  margin-left: 90px;
+ 
+}
+.options .p:hover {
+  text-decoration: underline;
+}
+
