@@ -1,6 +1,6 @@
 import "./raiseTicket.css";
 import React, { useState, useEffect } from "react";
-
+import Swal from "sweetalert2";
 
 function RaiseTicket() {
 
@@ -24,8 +24,12 @@ useEffect(() => {
   console.log("TOKEN SENT:", token);
 
   if (!token) {
-    alert("Please login again");
-    return;
+    Swal.fire({
+    icon: "warning",
+    title: "Login",
+    text: "Please login again",
+  });
+  return;
   }
 
   try {
@@ -47,12 +51,23 @@ useEffect(() => {
     if (!response.ok) {
       const errorData = await response.json();
       console.log("ERROR:", errorData);
-      alert("Failed to create ticket");
-      return;
+      Swal.fire({
+    icon: "error",
+    text: "Failed to create ticket",
+  });
+  return;
     }
 
     const data = await response.json();
-    alert("Ticket created successfully!");
+    Swal.fire({
+  icon: "success",
+  title: "Success",
+  text: "Ticket created successfully",
+  confirmButtonText: "Go to Dashboard",
+}).then(() => {
+  navigate("/user-dashboard");
+});
+
   
     setProjectTitle("");
     setIssue("");
@@ -61,7 +76,12 @@ useEffect(() => {
 
   } catch (error) {
     console.error("Error:", error);
-    alert("Server error");
+    Swal.fire({
+    icon: "error",
+    title: "Server Error",
+    
+  });
+  return;
   }
 }
 

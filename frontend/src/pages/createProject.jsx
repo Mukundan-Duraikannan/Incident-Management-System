@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './createProject.css'
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function CreateProject() {
   const [name, setName] = useState("");
@@ -11,9 +12,13 @@ function CreateProject() {
     e.preventDefault();
 
     if (!name || !description) {
-      alert("Please fill all fields");
-      return;
-    }
+  Swal.fire({
+    icon: "warning",
+    title: "Missing fields",
+    text: "Please fill all fields",
+  });
+  return;
+}
 
     try {
       const response = await fetch("http://127.0.0.1:8000/projects/create-project", {
@@ -36,11 +41,22 @@ function CreateProject() {
       localStorage.setItem("projectId", data.id);
       localStorage.setItem("projectName", data.name);
       localStorage.setItem("projectDescription", data.description);
+      Swal.fire({
+    icon: "success",
+    title: "Project created",
+    text: "Project created successfully!",
+    timer: 2000,
+    showConfirmButton: false,
+  });
       navigate("/project-member");
 
     } catch (error) {
       console.error("Error:", error);
-      alert("Error creating project");
+       Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: "Error creating project",
+  });
     }
   };
 

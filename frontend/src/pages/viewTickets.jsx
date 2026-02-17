@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./viewTickets.css";
-
+import Swal from "sweetalert2";
 function ViewTickets() {
   const [tickets, setTickets] = useState([]);
   const [search, setSearch] = useState("");
@@ -28,7 +28,11 @@ function ViewTickets() {
       method: "DELETE",
     });
 
-    alert("Ticket Deleted");
+    Swal.fire({
+      icon:"success",
+      title:"Ticket Deleted Successfully",
+    });
+    return;
     fetchTickets();
   };
 
@@ -57,11 +61,18 @@ function ViewTickets() {
     if (!res.ok) {
       const err = await res.json();
       console.error("Update failed:", err);
-      alert("Update failed. Check console.");
+      Swal.fire({
+        icon:"error",
+        title:"Update Failed",
+      });
       return;
     }
 
-    alert("Ticket Updated");
+    Swal.fire({
+      icon:"success",
+      title:"Update Successful",
+    });
+    return;
     setEditTicket(null);
     fetchTickets();
   } catch (error) {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './login.css'
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,22 +24,39 @@ function Login() {
     }
   }, []);
   async function handleLogin() {
-    if (!email && !password && role === 'Select') {
-      alert('Please enter all fields');
-      return;
-    }
-    else if(!email){
-      alert('Please enter email');
-      return;
-    }
-    else if(!password){
-      alert('Please enter password');
-      return;
-    }
-    else if(role === 'Select'){
-      alert('Please select role');
-      return; 
-    }
+    if (!email && !password && role === "Select") {
+  Swal.fire({
+    icon: "error",
+    title: "Missing fields",
+    text: "Please enter all fields",
+  });
+  return;
+}
+else if (!email) {
+  Swal.fire({
+    icon: "warning",
+    title: "Email required",
+    text: "Please enter email",
+  });
+  return;
+}
+else if (!password) {
+  Swal.fire({
+    icon: "warning",
+    title: "Password required",
+    text: "Please enter password",
+  });
+  return;
+}
+else if (role === "Select") {
+  Swal.fire({
+    icon: "warning",
+    title: "Role required",
+    text: "Please select role",
+  });
+  return;
+}
+
 else{
     try {
       const response = await fetch("http://127.0.0.1:8000/auth/login", {
@@ -53,12 +72,16 @@ else{
 
       });
 
-      if (!response.ok) {
-        alert("Invalid login");
-        return;
-      }
 
-      
+if (!response.ok) {
+  Swal.fire({
+    icon: "error",
+    title: "Login failed",
+    text: "Invalid login",
+  });
+  return;
+}
+
      const data = await response.json();
 
 console.log("LOGIN RESPONSE:", data);
@@ -88,7 +111,12 @@ localStorage.setItem("email", email);
       }
 
     } catch (error) {
-      alert("Server error. Try again later.");
+      Swal.fire({
+    icon: "error",
+    title: "Server error",
+    
+  });
+  return;
     }
   }
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./viewUsers.css";
-
+import Swal from "sweetalert2";
 function ViewUser() {
   const [users, setUsers] = useState([]);
   const [editUser, setEditUser] = useState(null);
@@ -34,14 +34,28 @@ function ViewUser() {
   
 
   const handleDelete = async (id) => {
-  const confirm = window.confirm("Are you sure you want to disable this user?");
-  if (!confirm) return;
+  const result1 = await Swal.fire({
+    title: "Are you sure?",
+    text: "This will disable the User.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it",
+    cancelButtonText: "Cancel",
+  });
+  
+  if (!result1.isConfirmed) return;
 
   await fetch(`http://127.0.0.1:8000/user/delete/${id}`, {
     method: "DELETE",
   });
 
-  alert("User disabled successfully");
+  Swal.fire({
+    icon:"success",
+    title:"User Disabled successfully",
+  });
+  return;
   fetchUsers();
 };
 

@@ -10,6 +10,6 @@ class ProjectMember(Base):
     project_id = Column(Integer, ForeignKey("projects.id"))
     role = Column(String)
 
-    user = relationship("User")
-    project = relationship("Project")
+    user = relationship("User", backref="project_members")
+    project = relationship("Project", backref="project_members")
 

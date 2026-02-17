@@ -44,12 +44,25 @@ def search_project_members(field: str, value: str, db: Session = Depends(get_db)
     results = query.all()
     return [{"Project id": r.project_id,"Project name": r.project_name,}for r in results]
 @router.get("/{project_id}")
+@router.get("/project-members/{project_id}")
 def get_project_members(project_id: int, db: Session = Depends(get_db)):
-    members = (db.query(ProjectMember, User).join(User, ProjectMember.user_id == User.id).filter(ProjectMember.project_id == project_id).all())
-    result = []
-    for member, user in members:
-        result.append({"user_id": user.id,"username": user.name,"role": member.role})
-    return result
+    members = (
+        db.query(ProjectMember)
+        .join(User)
+        .filter(ProjectMember.project_id == project_id)
+        .all()
+    )
+
+    return [
+        {
+            "user_id": m.user.id,
+            "username": m.user.name,
+            "role": m.role,
+            "isActive": m.user.isActive   # ✅ comes from User table
+        }
+        for m in members
+    ]
+
 @router.put("/update/{project_id}/{user_id}", response_model=ProjectMemberResponse)
 def update_project_member_role(project_id: int,user_id: int,role: str,db: Session = Depends(get_db)):
     member = (db.query(ProjectMember).filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id).first())

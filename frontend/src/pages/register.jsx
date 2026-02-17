@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './register.css'
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 function Register() {
    const navigate = useNavigate();
   const [name, setName] = useState('')
@@ -10,24 +11,44 @@ function Register() {
    async function handleRegister() {
 
   if (!name && !email && !password && role === "Select") {
-    alert("Please fill all fields");
-    return;
+    Swal.fire({
+    icon: "error",
+    title: "Missing fields",
+    text: "Please enter all fields",
+  });
+  return;
   }
   else if(!name){
-    alert("Please enter name");
-    return; 
+    Swal.fire({
+    icon: "warning",
+    title: "Name required",
+    text: "Please enter name",
+  });
+  return; 
   }
   else if(!email){
-    alert("Please enter email");
-    return; 
+    Swal.fire({
+    icon: "warning",
+    title: "Email required",
+    text: "Please enter email",
+  });
+  return;
   }
   else if(!password){
-    alert("Please enter password");
-    return; 
+Swal.fire({
+    icon: "warning",
+    title: "Password required",
+    text: "Please enter password",
+  });
+  return;
   }
   else if(role === "Select"){
-    alert("Please select role");
-    return; 
+    Swal.fire({
+    icon: "warning",
+    title: "Role required",
+    text: "Please select role",
+  });
+  return;
   }
   else{
   try {
@@ -46,15 +67,28 @@ function Register() {
 
     if (!response.ok) {
       const error = await response.json();
-      alert(error.detail || "Registration failed");
-      return;
+      Swal.fire({
+  icon: "error",
+  title: "Registration failed",
+});
+return;
     }
 
-    alert("Registration successful");
+    Swal.fire({
+  icon: "success",
+  title: " successful",
+  timer: 2000,
+  showConfirmButton: false,
+});
     navigate("/");
 
   } catch (error) {
-    alert("Server error");
+    Swal.fire({
+    icon: "error",
+    title: "Server Error",
+    
+  });
+  return;
   }
 }
    }

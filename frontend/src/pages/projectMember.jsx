@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./projectmember.css";
+import Swal from "sweetalert2";
 
 function ProjectMember() {
   const BASE_URL = "http://127.0.0.1:8000";
@@ -72,7 +73,14 @@ useEffect(() => {
       }),
     });
 
-    alert("Members Assigned Successfully");
+   Swal.fire({
+  icon: "success",
+  title: "Success",
+  text: "Members assigned successfully",
+  confirmButtonText: "Go to Dashboard",
+}).then(() => {
+  navigate("/admin-dashboard");
+});
 
     setSelectedManager("");
     setSelectedTeamMembers([]);
@@ -91,7 +99,8 @@ useEffect(() => {
             onChange={(e) => setSelectedManager(e.target.value)}
             required>
             <option value="">Select Manager</option>
-            {users.map((u) => (
+            {users.filter((u)=> u.isActive===true)
+            .map((u) => (
               <option key={u.id} value={u.id}>
                 {u.email}
               </option>
@@ -101,7 +110,7 @@ useEffect(() => {
           <label>Select Team Members</label>
 <div className="user-list">
   {users
-    .filter((u) => u.id !== parseInt(selectedManager))
+    .filter((u) => u.isActive=== true && u.id !== parseInt(selectedManager))
     .map((u) => (
       <div key={u.id} className="user-row">
         <input

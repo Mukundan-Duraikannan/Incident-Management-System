@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./viewProjectMembers.css";
-
+import Swal from "sweetalert2";
 function ViewProjectMembers() {
   const BASE_URL = "http://127.0.0.1:8000";
 
@@ -81,7 +81,18 @@ function ViewProjectMembers() {
   };
 
 const handleDelete = async (projectId, userId) => {
-  if (!window.confirm("Are you sure you want to delete this member?")) return;
+  const result1 = await Swal.fire({
+  title: "Are you sure?",
+  text: "This will delete the member from the project.",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#d33",
+  cancelButtonColor: "#3085d6",
+  confirmButtonText: "Yes, delete it",
+  cancelButtonText: "Cancel",
+});
+
+if (!result1.isConfirmed) return;
 
   try {
     console.log("Deleting member:", projectId, userId);
@@ -93,20 +104,45 @@ const handleDelete = async (projectId, userId) => {
 
     if (!res.ok) {
       const errorData = await res.json();
-      alert(`Delete failed: ${errorData.detail || res.status}`);
-      return;
+     Swal.fire({
+    icon: "error",
+    title: "Delete Failed",
+    
+  });
+  return;
     }
 
-    alert("Member deleted successfully");
+    Swal.fire({
+      icon:"success",
+      title: "Deleted Successfully",
+    });
+    return;
     handleOpen(selectedProject); 
   } catch (error) {
     console.error("Delete error:", error);
-    alert("Delete failed: network or server error");
+    Swal.fire({
+      icon:"error",
+      title:"Server Error",
+    });
+    return;
   }
 };
 
   const handleDeleteProject = async (projectId) => {
-    if (!window.confirm("Are you sure you want to delete this project and all its members?")) return;
+  
+
+const result = await Swal.fire({
+  title: "Are you sure?",
+  text: "This will delete the project and all its members.",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#d33",
+  cancelButtonColor: "#3085d6",
+  confirmButtonText: "Yes, delete it",
+  cancelButtonText: "Cancel",
+});
+
+if (!result.isConfirmed) return;
 
     try {
       const res = await fetch(`${BASE_URL}/projects/delete/${projectId}`, {
@@ -115,22 +151,36 @@ const handleDelete = async (projectId, userId) => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        alert(`Project delete failed: ${errorData.detail || res.status}`);
+        Swal.fire({
+          icon:"error",
+          title:"Project Delete failed",
+        });
         return;
       }
 
-      alert("Project deleted successfully");
+     Swal.fire({
+      icon:"success",
+      title:"Project Deleted Successfully",
+     });
+     return;
       fetchProjects(); 
       if (selectedProject?.id === projectId) closeModal();
     } catch (error) {
       console.error("Delete project error:", error);
-      alert("Project delete failed: network or server error");
+     Swal.fire({
+      icon:"error",
+      title:"Server Error",
+     });
+     return;
     }
   };
 
   const handleUpdate = async (userId) => {
     if (!newRole) {
-      alert("Please enter a role");
+      Swal.fire({
+        icon:"warning",
+        title:"Please enter the role",
+      });
       return;
     }
 
@@ -141,7 +191,10 @@ const handleDelete = async (projectId, userId) => {
       );
 
       if (!res.ok) {
-        alert("Update failed");
+        Swal.fire({
+          icon:"error",
+          title:"Update failed",
+        });
         return;
       }
       setEditingUser(null);
@@ -238,6 +291,7 @@ const handleDelete = async (projectId, userId) => {
               <tbody>
                 {projectMembers.map((member) => {
                   const isEditing = editingUser === member.user_id;
+                  const isUserActive = member.isActive ===true;
 
                   return (
                     <tr key={`${selectedProject.id}-${member.user_id}`}>
@@ -257,42 +311,49 @@ const handleDelete = async (projectId, userId) => {
                       <td>
                         {isEditing ? (
                           <>
-                            <button
-                              className="button4"
-                              onClick={() => handleUpdate(member.user_id)}
-                            >
-                              Save
-                            </button>
-                            <button
-                              className="button4"
-                              onClick={() => setEditingUser(null)}
-                            >
-                              Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <>
-                            <button
-                              className="button4"
-                              onClick={() => {
-                                setEditingUser(member.user_id);
-                                setNewRole(member.role ?? "");
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              className="delete-btn"
-                              onClick={() =>
-                                handleDelete(selectedProject.id, member.user_id)
-                              }
-                            >
-                              Delete
-                            </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
+    <button
+        className="button4"
+        onClick={() => handleUpdate(member.user_id)}
+      >
+        Save
+      </button>
+      <button
+        className="button4"
+        onClick={() => setEditingUser(null)}
+      >
+        Cancel
+      </button>
+    </>
+  ) : isUserActive? (
+    <>
+      <button
+        className="button4"
+        onClick={() => {
+          setEditingUser(member.user_id);
+          setNewRole(member.role ?? "");
+        }}
+      >
+        Edit
+      </button>
+      <button
+        className="delete-btn"
+        onClick={() =>
+          handleDelete(selectedProject.id, member.user_id)
+        }
+      >
+        Delete
+      </button>
+    </>
+  ) : (
+    <>
+      <button className="button4" disabled >
+        Inactive
+      </button>
+
+    </>
+  )}
+</td>
+</tr>
                   );
                 })}
               </tbody>
