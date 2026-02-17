@@ -9,8 +9,6 @@ def create_project(db:Session,name:str,description:str):
     db.refresh(project)
     return project
 
-#def get_all_projects(db:Session):
-#    return db.query(Project).all()
 def get_projects(db:Session,user):
     if user.role.lower()=="admin":
         return db.query(Project).all()

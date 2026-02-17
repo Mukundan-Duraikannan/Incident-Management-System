@@ -14,7 +14,6 @@ class IssueCreate(BaseModel):
 
 class IssueAssign(BaseModel):
     user_id:int 
-    manager_id:int
     priority:PriorityEnum
 
 class IssueStatusUpdate(BaseModel):

@@ -1,175 +1,262 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./viewTickets.css";
 
 function ViewTickets() {
 
+  const { projectId } = useParams();
+
   const [tickets, setTickets] = useState([]);
-  const [searchId, setSearchId] = useState("");
+  const [members, setMembers] = useState([]);
+  const [myRole, setMyRole] = useState("");
 
   const token = localStorage.getItem("token");
-  const fetchTickets = async () => {
 
-    if (!token) {
-      alert("Please login first");
-      return;
-    }
+  useEffect(() => {
 
-    try {
-
-      const res = await fetch("http://localhost:8000/issues/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (!res.ok) {
-        console.log("Error fetching tickets");
-        setTickets([]);
-        return;
-      }
-
-      const data = await res.json();
-
-      console.log("All tickets:", data);
-
-      setTickets(Array.isArray(data) ? data : []);
-
-    }
-    catch (error) {
-      console.error(error);
-      setTickets([]);
-    }
-
-  };
-
-  const handleSearch = async () => {
-
-    if (!searchId) {
+    if (projectId) {
       fetchTickets();
-      return;
+      fetchMembers();
     }
+
+  }, [projectId]);
+
+  async function fetchTickets() {
 
     try {
 
       const res = await fetch(
-        `http://localhost:8000/issues/${searchId}`,
+        `http://localhost:8000/issues/project/${projectId}`,
         {
-          method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         }
       );
 
-      if (!res.ok) {
-        alert("Issue not found");
-        setTickets([]);
-        return;
-      }
+      const data = await res.json();
+
+      setTickets(Array.isArray(data) ? data : []);
+
+    } catch (err) {
+
+      console.error(err);
+      setTickets([]);
+
+    }
+
+  }
+  async function fetchMembers() {
+
+    try {
+
+      const res = await fetch(
+        `http://localhost:8000/projects/${projectId}/members`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
 
       const data = await res.json();
 
-      setTickets([data]);
+      const memberList = Array.isArray(data) ? data : [];
+
+      setMembers(memberList);
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
+      const me = memberList.find(
+        m => m.user_id === payload.user_id
+      );
+
+      if (me) {
+        setMyRole(me.role.toLowerCase());
+      }
+
+    } catch (err) {
+
+      console.error(err);
+      setMembers([]);
 
     }
-    catch (error) {
-      console.error(error);
-      setTickets([]);
+
+  }
+  async function assignIssue(issueId) {
+
+    const userId =
+      document.getElementById(`user-${issueId}`).value;
+
+    const priority =
+      document.getElementById(`priority-${issueId}`).value;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
+    if (!userId || !priority) {
+
+      alert("Select user and priority");
+      return;
+
     }
 
-  };
 
-  useEffect(() => {
-    fetchTickets();
-  }, []);
+    try {
+
+      const res = await fetch(
+        `http://localhost:8000/issues/${issueId}/assign?project_id=${projectId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+    body: JSON.stringify({
+      user_id: parseInt(userId),
+      manager_id: payload.user_id,
+      priority: priority.toLowerCase()
+      })
+        }
+      );
+
+
+      if (res.ok) {
+
+        alert("Issue assigned successfully");
+
+        fetchTickets();
+
+      } else {
+
+        const err = await res.json();
+
+        alert(err.detail || "Assignment failed");
+
+      }
+
+    } catch (err) {
+
+      console.error(err);
+      alert("Server error");
+
+    }
+
+  }
+
 
   return (
 
-    <div className="view-tickets-container">
+    <div className="tickets-container">
 
-      <h2 className="view-tickets-title">View Tickets</h2>
+      <h2>Project Issues</h2>
 
-      <div className="search-section">
+      <table className="tickets-table">
 
-        <input
-          type="number"
-          placeholder="Enter Issue ID"
-          value={searchId}
-          onChange={(e) => setSearchId(e.target.value)}
-        />
+        <thead>
 
-        <button onClick={handleSearch}>
-          Search
-        </button>
+          <tr>
 
-        <button onClick={fetchTickets}>
-          Reset
-        </button>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Select User</th>
+            <th>Priority</th>
+            <th>Assign</th>
 
-      </div>
-      <div className="table-wrapper">
+          </tr>
 
-        <table className="ticket-table">
+        </thead>
 
-          <thead>
+        <tbody>
+
+          {tickets.length === 0 ? (
+
             <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Project ID</th>
-              <th>Raised By</th>
-              <th>Assigned To</th>
+              <td colSpan="4">No Issues Found</td>
             </tr>
-          </thead>
 
-          <tbody>
+          ) : (
 
-            {tickets.length === 0 ? (
+            tickets.map(ticket => (
 
-              <tr>
-                <td colSpan="7" className="no-tickets">
-                  No tickets found
-                </td>
+              <tr key={ticket.id}>
+
+                <td>{ticket.title}</td>
+
+                <td>{ticket.status}</td>
+
+                <td>{ticket.priority}</td>
+
+                <td>
+
+  {myRole === "manager" ? (
+
+    <div className="assign-box">
+
+      <select
+        id={`user-${ticket.id}`}
+        defaultValue=""
+        disabled={ticket.status === "Assigned"}
+      >
+        <option value="" disabled>
+          Select User
+        </option>
+
+        {members.map(member => (
+          <option
+            key={member.user_id}
+            value={member.user_id}
+          >
+            {member.name} (ID: {member.user_id})
+          </option>
+        ))}
+
+      </select>
+
+      <select
+        id={`priority-${ticket.id}`}
+        defaultValue=""
+        disabled={ticket.status === "Assigned"}
+      >
+        <option value="" disabled>
+          Select Priority
+        </option>
+
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+
+      </select>
+
+      <button
+        className="assign-btn"
+        disabled={ticket.status === "Assigned"}
+        onClick={() => assignIssue(ticket.id)}
+      >
+        {ticket.status === "Assigned" ? "Assigned" : "Assign"}
+      </button>
+
+    </div>
+
+  ) : (
+
+    <span className="manager-only">
+      Manager Only
+    </span>
+
+  )}
+
+</td>
+
+
               </tr>
 
-            ) : (
+            ))
 
-              tickets.map((ticket) => (
+          )}
 
-                <tr key={ticket.id}>
+        </tbody>
 
-                  <td>{ticket.id}</td>
-
-                  <td>{ticket.title}</td>
-
-                  <td>{ticket.description}</td>
-
-                  <td>{ticket.status}</td>
-
-                  <td>{ticket.project_id}</td>
-
-                  <td>{ticket.raised_by}</td>
-
-                  <td>
-                    {ticket.assigned_to
-                      ? ticket.assigned_to
-                      : "Not assigned"}
-                  </td>
-
-                </tr>
-
-              ))
-
-            )}
-
-          </tbody>
-
-        </table>
-
-      </div>
+      </table>
 
     </div>
 

@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/secure/protectedRoute.jsx";
 import RoleProtectedRoute from "./components/secure/roleProtectedRoute.jsx";
 import ResetPassword from "./components/registration/resetPassword.jsx";
 import Home from "./components/registration/home.jsx";
+import ProjectDashboard from "./components/registration/projectDashboard.jsx";
 function App() {
   return (
     <Routes>
@@ -42,6 +43,9 @@ function App() {
           path="/projects/:projectId/members" 
           element={<ProjectMember />} 
         />
+      <Route path="/projects/:projectId" element={<ProjectDashboard />}/>
+      <Route path="/projects/:projectId/issues" element={<ViewTickets />} />
+
     </Routes>
   );
 }

@@ -36,73 +36,36 @@ function Home() {
     navigate("/login");
   }
 
-  function viewMembers(projectId) {
-    navigate(`/projects/${projectId}/members`);
-  }
+  // function viewMembers(projectId) {
+  //   navigate(`/projects/${projectId}/members`);
+  // }
 
-  function raiseTicket(projectId) {
-    navigate(`/projects/${projectId}/raise-ticket`);
+  // function raiseTicket(projectId) {
+  //   navigate(`/projects/${projectId}/raise-ticket`);
+  // }
+   function openProject(projectId) {
+    navigate(`/projects/${projectId}`);
   }
 
   return (
 
-    <div className="home-container">
-
-      <div className="home-header">
-        <h2>My Projects</h2>
-        <button className="logout-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
-      {projects.length === 0 ? (
-
-        <p className="no-projects">No projects assigned</p>
-
-      ) : (
-
-        <div className="project-list">
-
-          {projects.map(project => (
-
-            <div key={project.id} className="project-card">
-
-              <div className="project-title">
-                {project.name}
-              </div>
-
-              <div className="project-description">
-                {project.description}
-              </div>
-
-              <div className="project-buttons">
-
-                <button
-                  className="btn members-btn"
-                  onClick={() => viewMembers(project.id)}
-                >
-                  View Members
-                </button>
-
-                <button
-                  className="btn ticket-btn"
-                  onClick={() => raiseTicket(project.id)}
-                >
-                  Raise Ticket
-                </button>
-
-              </div>
-
+   <div className="project-list">
+      <button onClick={handleLogout}>Logout</button>
+        {projects.map(project => (
+          <div
+            key={project.id}
+            className="project-card"
+            onClick={() => openProject(project.id)}
+          >
+            <div className="project-title">
+              {project.name}
             </div>
-
-          ))}
-
-        </div>
-
-      )}
-
-    </div>
-
+            <div className="project-description">
+              {project.description}
+            </div>
+          </div>
+        ))}
+      </div>
   );
 
 }

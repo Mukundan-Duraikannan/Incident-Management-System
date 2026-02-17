@@ -11,7 +11,7 @@ function Register() {
   const [password, setPassword] = useState('')
 
   async function handleRegister() {
-
+    const token = localStorage.getItem("token");
     if (!name || !email || !password) {
       Swal.fire({icon: "error",title: "Registration failed",text: "Enter all the fields"});
       return;
@@ -19,7 +19,7 @@ function Register() {
     try {
       const response = await fetch("http://localhost:8000/user", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json","Authorization": `Bearer ${token}`},
         body: JSON.stringify({name: name,email: email,password: password})
       });
 
