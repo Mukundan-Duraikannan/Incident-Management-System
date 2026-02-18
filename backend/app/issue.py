@@ -26,6 +26,7 @@ class IssueResponse(BaseModel):
     status:IssueStatus
     project_id:int
     raised_by:int
+    priority:PriorityEnum
     assigned_to:Optional[int]
     
     class Config:

@@ -13,6 +13,8 @@ class User(Base):
     role=Column(String,default="user")
     reset_otp=Column(String)
     otp_expiry=Column(DateTime)
+    isfirstlogin=Column(Boolean,default=True)
+
 
 class Project(Base):
     __tablename__ = "projects"

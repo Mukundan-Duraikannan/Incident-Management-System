@@ -42,3 +42,7 @@ def delete_issue(db:Session,issue_id:int):
     issue=get_issue(db,issue_id)
     db.delete(issue)
     db.commit()
+
+def get_assigned_issues(db:Session,user_id:int):
+    issues=db.query(Issue).filter(Issue.assigned_to==user_id).all()
+    return issues 

@@ -9,6 +9,21 @@ conf=ConnectionConfig(MAIL_USERNAME=settings.ADMIN_EMAIL,
     MAIL_SSL_TLS=False,
     USE_CREDENTIALS=True)
 
+async def registration_mail(email:str,temp_password:str):
+    msg=MessageSchema(
+        subject="Welcome to Incident Management System",
+        recipients=[email],
+        body=f"""Hi,
+        Your account has been created.
+        Login Credentials:
+        Email: {email}
+        Temporary Password: {temp_password}
+        Login here:
+            http://localhost:5173/login
+        """,subtype="plain")
+    fastMail=FastMail(conf)
+    await fastMail.send_message(msg)
+
 async def send_reset_mail(email:str,otp:str):
     msg=MessageSchema(subject="Reset password",recipients=[email],
     body=f"Hi,Here is the OTP to reset password {otp}.This otp expires in 10 minutes."

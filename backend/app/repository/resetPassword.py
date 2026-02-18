@@ -26,6 +26,7 @@ def reset_password(email:str,otp:str,newPassword:str,db:Session):
     if user.otp_expiry<datetime.utcnow():
         raise HTTPException(status_code=400,detail="OTP expired") 
     user.password=Hash.bcrypt(newPassword)
+    user.isfirstlogin=False
     db.commit()
     db.refresh(user)
     return {"message":"Password reset successful"}

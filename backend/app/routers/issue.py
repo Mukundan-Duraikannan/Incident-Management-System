@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+from typing import List
 from ..database import get_db
 from ..issue import IssueCreate, IssueAssign, IssueStatusUpdate, IssueResponse
 from ..repository import issue 
@@ -36,3 +37,7 @@ def project_issues(project_id:int,db:Session=Depends(get_db),access=Depends(proj
 def delete_issue(issue_id:int,db:Session=Depends(get_db),access=Depends(manager_only)):
     issue.delete_issue(db, issue_id)
     return {"message": "Issue deleted"}
+
+@router.get("/assigned/me",response_model=List[IssueResponse])
+def get_assigned_issues(db:Session=Depends(get_db),user=Depends(get_current_user)):
+    return issue.get_assigned_issues(db,user.id)

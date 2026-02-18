@@ -72,6 +72,16 @@ function Login() {
       }
 
       console.log("LOGIN RESPONSE:", data);
+      if (data.first_login) {
+        localStorage.setItem("resetEmail", email);
+        Swal.fire({
+          icon: "info",
+          title: "Password Reset Required",
+          text: "Check your mail for OTP."
+        });
+        navigate("/reset-password");
+        return;
+      }
       localStorage.setItem("token", data.access_token);
       localStorage.setItem("role", data.role);
       localStorage.setItem("email", data.email);

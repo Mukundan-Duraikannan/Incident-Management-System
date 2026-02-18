@@ -59,12 +59,17 @@ function ProjectDashboard() {
         >
           View Issues
         </button>
-
+          {role !== "manager" && (
+          <button 
+                onClick={()=>navigate(`/projects/${projectId}/assigned-issues`)}
+                className="assigned-btn">Assigned Issues</button>
+        )}
         {role === "manager" && (
           <div className="manager-label">
             You are Manager
           </div>
         )}
+       
 
       </div>
 
