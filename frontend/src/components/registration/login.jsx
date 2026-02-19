@@ -117,66 +117,67 @@ function Login() {
 
   return (
 
-    <div className='div-elements'>
-
-      <div className='box'>
-
-        <h2 className='login-font'>Sign into your account</h2>
-
-        <label className='label-font'>
-          Email:
-          <input
-            type='email'
-            className='input-font'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-
-        <label className='label-font'>
-          Password:
-          <input
-            type='password'
-            className='input-font'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-
-        <div className="options">
-
-          <label className='label-font'>
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            Remember Me
-          </label>
-
-          <label
-            className='p'
-            onClick={() => navigate("/forgot-password")}
-          >
-            Forgot Password?
-          </label>
-
+    <div className="div-elements">
+     
+      <div className="left-panel">
+        <div className="brand-row">
+          <img src="cogniwide logo.png" alt="logo" />
+         
+          <div className="brand-text">
+            <div className="company-name">COGNIWIDE</div>
+            <div className="tagline">Transform With Technology</div>
+          </div>
         </div>
-
-        <button
-          type='button'
-          className='button'
-          onClick={handleLogin}
-        >
-          Login
-        </button>
-
       </div>
-
+ 
+     
+      <div className="right-panel">
+        <div className="box">
+ 
+          <h2 className="login-font">Sign into your account</h2>
+ 
+          <div className="field">
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+ 
+          <div className="field">
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+ 
+          <div className="options">
+            <label>
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              Remember Me
+            </label>
+ 
+            <div className="div" onClick={() => navigate("/forgot-password")}>
+              Forgot Password?
+            </div>
+          </div>
+ 
+          <button className="button" onClick={handleLogin}>
+            Login
+          </button>
+ 
+        </div>
+      </div>
+ 
     </div>
-
   );
-
 }
-
+ 
 export default Login;
