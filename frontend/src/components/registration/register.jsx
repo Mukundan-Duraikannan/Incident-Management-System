@@ -38,53 +38,56 @@ function Register() {
 
   }
 
-  return (
-    <div className="div-elements">
-
-      <div className="box1">
-
-        <h2 className="login-font">Create Account</h2>
-
-        <label className="label-font">
-          Name:
-          <input
-            type="text"
-            className="input-font"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-
-        <label className="label-font">
-          Email:
-          <input
-            type="email"
-            className="input-font"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-
-        <label className="label-font">
-          Password:
-          <input
-            type="password"
-            className="input-font"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-
-        <button className="button" onClick={handleRegister}>
-          Register
-        </button>
-
+return (
+    <div className="register-container">
+      <div className="register-left-bg"></div>
+      <div className="register-right-bg"></div>
+      <div className="register-center">
+        <div className="register-box">
+         
+          <h2 className="register-title">Create Account</h2>
+          <p className="register-subtitle">Sign up to get started</p>
+ 
+          <label>
+            Name
+            <input
+              type="text"
+              className="register-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+ 
+          <label>
+            Email
+            <input
+              type="email"
+              className="register-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+ 
+          <label>
+            Password
+            <input
+              type="password"
+              className="register-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+ 
+          <button
+            className="register-button"
+            onClick={handleRegister}
+          >
+            Register
+          </button>
+        </div>
       </div>
-
     </div>
-
-  )
-
+  );
 }
-
+ 
 export default Register;

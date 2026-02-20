@@ -1,0 +1,62 @@
+.dashboard-container {
+  padding: 2.5rem 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ffffff;
+  color: #334155;
+}
+.dashboard-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+.dashboard-header h2 {
+  color: #0369a1; 
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+.dashboard-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.dashboard-card:hover {
+  border-color: #0369a1;
+  background-color: #f0f9ff;
+}
+.card-title {
+  color: #0369a1;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.card-sub {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+.manager{
+  margin-top: 2rem;
+  display: inline-block;
+  color: #0369a1;
+  background: #f0f9ff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #0369a1;
+}
+@media (max-width: 600px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './login.css'
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-
+import logo from "../../assets/cogniwide_logo.png";
 function Login() {
 
   const navigate = useNavigate();
@@ -121,7 +121,7 @@ function Login() {
      
       <div className="left-panel">
         <div className="brand-row">
-          <img src="cogniwide logo.png" alt="logo" />
+          <img src={logo} alt="logo" />
          
           <div className="brand-text">
             <div className="company-name">COGNIWIDE</div>

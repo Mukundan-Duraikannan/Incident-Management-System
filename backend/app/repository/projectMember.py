@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session,joinedload
 from fastapi import HTTPException,status
 from ..models import ProjectMember,User,Project
 
@@ -16,7 +16,10 @@ def add_member(db:Session,project_id:int,user_id:int,role:str):
     return member 
 
 def get_project_members(db:Session,project_id:int): 
-    return db.query(ProjectMember).filter(ProjectMember.project_id==project_id)
+    members=(db.query(ProjectMember).options(joinedload(ProjectMember.user)).filter(ProjectMember.project_id==project_id).all())
+    return [
+    {"user_id":m.user_id,"name":m.user.name,"role":m.role}
+        for m in members]
 
 def update_project_member(db:Session,project_id:int,user_id:int,role:str):
     member=db.query(ProjectMember).filter(ProjectMember.project_id==project_id,ProjectMember.user_id==user_id).first()
@@ -26,7 +29,6 @@ def update_project_member(db:Session,project_id:int,user_id:int,role:str):
     db.commit()
     db.refresh(member)
     return member
-
 
 def delete_project_member(db:Session, project_id: int, user_id: int):
     member=db.query(ProjectMember).filter(ProjectMember.project_id==project_id,ProjectMember.user_id==user_id).first()

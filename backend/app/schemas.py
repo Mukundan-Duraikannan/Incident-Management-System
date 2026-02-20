@@ -63,6 +63,7 @@ class AddMember(BaseModel):
 class MemberResponse(BaseModel):
     user_id:int 
     role:str 
+    name:str
     class Config:
         from_attributes=True 
 

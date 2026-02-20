@@ -1,77 +1,80 @@
-.view-tickets-container {
-  padding: 40px;
+.tickets-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #3e9adf, #f5f7fa);
+  background: #f8fbff;
+  padding: 40px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
 }
-
-.view-tickets-title {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 32px;
-  color: #2c3e50;
+.tickets-container h2 {
+  color: #0284c7;
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 700;
 }
-
-.ticket-table {
-  width: 90%;
-  margin: 0 auto;
+.tickets-table {
+  width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(2,132,199,0.08);
+}
+.tickets-table thead {
+  background: #0284c7;
+  color: #fff;
+}
+.tickets-table th,
+.tickets-table td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
 }
 
-.ticket-table th,
-.ticket-table td {
-  padding: 15px;
-  text-align: center;
+.tickets-table tbody tr:hover {
+  background: #f0f9ff;
+}
+.assign-box {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
-.ticket-table th {
-  background-color: #4e73df;
-  color: white;
-}
-.ticket-table tr {
-  background-color: white;
+.assign-box select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  transition: 0.2s;
+  height: 36px;
+  width: 140px;
 }
 
-.remove-btn {
-  padding: 8px 15px;
+.assign-box select:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.15);
+}
+.assign-btn {
+  background: #0284c7;
+  color: #fff;
   border: none;
-  border-radius: 6px;
-  background-color: #e74a3b;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.remove-btn:hover {
-  background-color: #c0392b;
-}
-.search-section{
-  margin-bottom:10px;
-  
-}
-.search-section select{
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 200px;
-  font-size: 14px;
-}
-.search-section input {
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 500px;
-  font-size: 14px;
-  margin-left:350px;
-}
-
-.search-section button {
   padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  margin-left:5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.25s;
+  height: 36px;
+}
+.assign-btn:hover {
+  background: #0ea5e9;
+  transform: translateY(-1px);
+}
+.assign-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+.manager-only {
+  color: #9ca3af;
+  font-weight: 600;
 }

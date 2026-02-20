@@ -9,7 +9,6 @@ router=APIRouter(prefix='/user',tags=['Users'])
 @router.post("/",response_model=schemas.ShowUser)
 async def create_user(request:schemas.User,db:Session=Depends(database.get_db),admin=Depends(admin_only)):
     users=await user.create_user(request,db)
-    #await resetPassword.forgot_password(users.email,db)
     return users
 
 @router.get("/",response_model=List[schemas.ShowUser])

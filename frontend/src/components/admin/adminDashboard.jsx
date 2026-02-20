@@ -27,6 +27,9 @@ function AdminDashboard() {
     localStorage.removeItem("token");
     navigate("/login")
   }
+  // const analytics=()=>{
+  //   navigate("/dummy")
+  // }
   return (
     <div className="dash">
       <button onClick={handleLogout}>
@@ -41,7 +44,7 @@ function AdminDashboard() {
         <button className="dashboard-card" onClick={viewprojectmember}>View Project Team members</button>
         <button className="dashboard-card" onClick={viewusers}>View Users</button>
         <button className="dashboard-card" onClick={manageUser}>Manage User</button>
-        
+        {/* <button className="dashboard-card" onClick={analytics}>Analytics</button> */}
       </div>
     </div>
   );

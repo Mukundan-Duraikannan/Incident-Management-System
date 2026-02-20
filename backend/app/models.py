@@ -1,5 +1,6 @@
 from .database import Base
 from sqlalchemy import Column,Integer,String,Boolean,Text,ForeignKey,Enum,DateTime
+from sqlalchemy.orm import relationship
 import enum 
 from datetime import datetime
 class User(Base):
@@ -30,7 +31,8 @@ class ProjectMember(Base):
     project_id=Column(Integer,ForeignKey("projects.id"))
     user_id=Column(Integer,ForeignKey("users.id"))
     role=Column(String)
-
+    user=relationship("User")
+    
 class IssueStatus(enum.Enum):
     Open="Open"
     Assigned="Assigned"
