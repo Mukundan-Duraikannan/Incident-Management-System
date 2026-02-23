@@ -93,10 +93,7 @@ function ViewTickets() {
     });
       return;
     }
-
-
     try {
-
       const res = await fetch(
         `http://localhost:8000/issues/${issueId}/assign?project_id=${projectId}`,
         {
@@ -112,16 +109,13 @@ function ViewTickets() {
       })
         }
       );
-
-
       if (res.ok) {
-
-  Swal.fire({
-    icon: "success",
-    title: "Assigned!",
-    text: "Issue assigned successfully",
-    confirmButtonColor: "#3085d6"
-  });
+      Swal.fire({
+        icon: "success",
+        title: "Assigned!",
+        text: "Issue assigned successfully",
+        confirmButtonColor: "#3085d6"
+      });
         fetchTickets();
       } 
       else 
@@ -178,7 +172,7 @@ function ViewTickets() {
                         <option value="" disabled>Select User</option>
                         {members.map(member => (
                           <option key={member.user_id} value={member.user_id}>
-                            {member.name} (ID: {member.user_id})
+                            {member.name} 
                           </option>
                         ))}
 

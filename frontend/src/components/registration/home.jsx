@@ -38,15 +38,9 @@ function Home() {
   function openProject(projectId) {
     navigate(`/projects/${projectId}`);
   }
- 
-  // Filtered projects based on search input
+
   const filteredProjects =
-    search.trim() === ""
-      ? projects
-      : projects.filter((p) =>
-          p.name.toLowerCase().includes(search.toLowerCase())
-        );
- 
+    search.trim() === ""?projects:projects.filter((p) =>p.name.toLowerCase().includes(search.toLowerCase()));
   return (
     <div className="home-container">
       <button className="logout-btn" onClick={handleLogout}>

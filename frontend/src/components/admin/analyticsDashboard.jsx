@@ -1,103 +1,74 @@
 import { useEffect, useState } from "react";
 import {
-  PieChart, Pie, Tooltip, Cell,
   BarChart, Bar, XAxis, YAxis,
-  LineChart, Line, CartesianGrid,
-  ResponsiveContainer
+  Tooltip, CartesianGrid,
+  ResponsiveContainer, Legend
 } from "recharts";
+import './analyticsDashboard.css'
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+function AnalyticsDashboard() {
 
-export default function AnalyticsDashboard() {
+  const [data, setData] = useState([]);
+  const [projectStatus,setProjectStatus] = useState([]);
+  const totalProjects = data.length;
+  const totalUsers = data.reduce((a, b) => a + b.users, 0);
+  const totalIssues = data.reduce((a, b) => a + b.issues, 0);
 
-  const [issues, setIssues] = useState([]);
-
-  const [analytics, setAnalytics] = useState({status:[],priority:[],trend:[]});
   useEffect(() => {
-    fetch("http://localhost:8000/issues/")
+    const token = localStorage.getItem("token");
+    fetch("http://localhost:8000/analytics/projects", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(res => res.json())
-      .then(data => {
-        setIssues(data);
-        generateAnalytics(data);
+      .then(d => {
+        if (Array.isArray(d)) setData(d);
       })
-      .catch(err => console.log(err));
+      .catch(console.log);
   }, []);
-  const generateAnalytics = (issues) => {
-    const statusCounts = {};
-    issues.forEach(i => {
-      const s = i.status || "Unknown";
-      statusCounts[s] = (statusCounts[s] || 0) + 1;
-    });
-    const status = Object.keys(statusCounts).map(k => ({
-      name: k,
-      value: statusCounts[k]
-    }));
-    const priorityCounts = {};
-    issues.forEach(i => {
-      const p = i.priority || "Unknown";
-      priorityCounts[p] = (priorityCounts[p] || 0) + 1;
-    });
-    const priority = Object.keys(priorityCounts).map(k => ({
-      name: k,
-      value: priorityCounts[k]
-    }));
-    const trendMap = {};
-    issues.forEach(i => {
-      if (!i.created_at) return;
-      const month = new Date(i.created_at)
-        .toLocaleString("default", { month: "short" });
-      trendMap[month] = (trendMap[month] || 0) + 1;
-    });
-    const trend = Object.keys(trendMap).map(m => ({
-      month: m,
-      incidents: trendMap[m]
-    }));
-    setAnalytics({ status, priority, trend });
-  };
+  const chartData = [...data]
+    .sort((a, b) => b.issues - a.issues)
+    .slice(0, 10);
+    
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Analytics Dashboard</h2>
-      <div style={{ width: "100%", height: 300 }}>
-        <h3>Incidents by Status</h3>
-        <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={analytics.status}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={100}
+    <div className="analytics-container">
+      <h2>Project Analytics</h2>
+      <div className="summary-grid">
+        <div className="card projects">
+          <h4>Total Projects</h4>
+          <h2>{totalProjects}</h2>
+        </div>
+        <div className="card users">
+          <h4>Total Users</h4>
+          <h2>{totalUsers}</h2>
+        </div>
+        <div className="card issues">
+          <h4>Total Issues</h4>
+          <h2>{totalIssues}</h2>
+        </div>
+      </div>
+      <div className="chart-box">
+        <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+                data={chartData}
+                layout="vertical"
+                margin={{ left: 40 }}
             >
-              {analytics.status.map((entry, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-      <div style={{ width: "100%", height: 300 }}>
-        <h3>Priority Distribution</h3>
-        <ResponsiveContainer>
-          <BarChart data={analytics.priority}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="value" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <div style={{ width: "100%", height: 300 }}>
-        <h3>Incidents Trend</h3>
-        <ResponsiveContainer>
-          <LineChart data={analytics.trend}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="incidents" />
-          </LineChart>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis
+            dataKey="project"
+            type="category"
+            width={150}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="users" name="Users" fill="#93c5fd" />
+          <Bar dataKey="issues" name="Issues" fill="#2563eb" />
+        </BarChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 }
+
+export default AnalyticsDashboard;

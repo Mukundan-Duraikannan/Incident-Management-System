@@ -19,6 +19,7 @@ import ProjectDashboard from "./components/registration/projectDashboard.jsx";
 import AssignedIssues from "./components/registration/assignedIssues.jsx";
 import ViewDashboard from "./components/registration/viewDashboard.jsx";
 import AnalyticsDashboard from "./components/admin/analyticsDashboard.jsx";
+import AdminAnalytics from "./components/registration/adminAnalytics.jsx";
 
 function App() {
   return (
@@ -50,7 +51,7 @@ function App() {
         />
       <Route path="/projects/:projectId" element={<ProjectDashboard />}/>
       <Route path="/projects/:projectId/issues" element={<ViewTickets />} />
-      <Route path="/dummy" element={<AnalyticsDashboard/>}></Route>
+      <Route path="/analytics" element={<AnalyticsDashboard/>}></Route>
     </Routes>
   );
 }

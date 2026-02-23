@@ -9,7 +9,7 @@
   position: absolute;
   right: 40px;
   top: 40px;
-  background: #ef4444;
+  background: #0284c7;
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -19,7 +19,7 @@
   transition: 0.25s;
 }
 .dash>button:hover{
-  background: #dc2626;
+  background: #0369a1;
 }
 .admin-dashboard{
   text-align: center;

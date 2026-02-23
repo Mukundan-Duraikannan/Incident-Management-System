@@ -5,7 +5,7 @@ from ..database import get_db
 from ..issue import IssueCreate, IssueAssign, IssueStatusUpdate, IssueResponse
 from ..repository import issue 
 from .. import issue as Issue
-from ..oauth2 import get_current_user
+from ..oauth2 import get_current_user,admin_only
 from ..projectAccess import manager_only,project_member_only
 router = APIRouter(prefix="/issues", tags=["Issues"])
 
@@ -14,7 +14,7 @@ def raise_issue(project_id:int,request:IssueCreate,db:Session=Depends(get_db),ac
     return issue.create_issue(db,request,project_id,user.id)
 
 @router.get("/",response_model=list[IssueResponse])
-def get_all_issues(db:Session=Depends(get_db),user=Depends(get_current_user)):
+def get_all_issues(db:Session=Depends(get_db),user=Depends(get_current_user),admin=Depends(admin_only)):
     return issue.get_all_issues(db)
 
 @router.get("/{issue_id}",response_model=IssueResponse)

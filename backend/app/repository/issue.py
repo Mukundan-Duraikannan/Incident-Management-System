@@ -29,7 +29,7 @@ def assign_issue(db:Session,issue_id:int,user_id:int,priority:str):
 def update_status(db:Session,issue_id:int,status,current_user_id:int):
     issue=get_issue(db,issue_id)
     if issue.assigned_to!=current_user_id:
-        raise HTTPException(403,"Only assigned dev can update status")
+        raise HTTPException(403,"Only assigned developer can update status")
     issue.status=status
     db.commit()
     db.refresh(issue)
