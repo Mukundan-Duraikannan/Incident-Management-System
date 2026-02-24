@@ -1,0 +1,126 @@
+.projectmember-elements {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef6ff, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", "Inter", sans-serif;
+}
+ 
+.box-projectmember {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  padding: 40px 36px;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  border-top: 6px solid #2563eb;
+}
+ 
+.box-projectmembers h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 30px;
+  text-align: center;
+}
+ 
+.projectmembers-form {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.projectmembers-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+ 
+.projectmembers-form input,
+.projectmembers-form select {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  outline: none;
+  margin-bottom: 22px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+  background: #fff;
+}
+ 
+.projectmembers-form input:focus,
+.projectmembers-form select:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+ 
+.projectmembers-form input[readonly] {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+}
+ 
+.user-list {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 24px;
+}
+ 
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+ 
+.user-row:hover {
+  background: #f1f5f9;
+}
+ 
+.user-row span {
+  font-size: 14px;
+  color: #334155;
+}
+ 
+.user-row input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+  cursor: pointer;
+}
+ 
+.projectmembers-form button {
+  width: 100%;
+  padding: 14px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.1s ease;
+}
+ 
+.projectmembers-form button:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+}
+ 
+@media (max-width: 768px) {
+  .box-projectmembers {
+    padding: 30px 24px;
+  }
+ 
+  .box-projectmembers h2 {
+    font-size: 24px;
+  }
+}

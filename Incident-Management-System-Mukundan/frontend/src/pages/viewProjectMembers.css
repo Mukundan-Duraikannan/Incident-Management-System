@@ -1,0 +1,82 @@
+.view-members-container {
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #3e9adf, #f5f7fa);
+}
+
+.view-members-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  color: #2c3e50;
+}
+
+.members-table {
+  width: 90%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: visible;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.members-table th,
+.members-table td {
+  padding: 15px;
+  text-align: center;
+}
+
+.members-table th {
+  background-color: #4e73df;
+  color: white;
+}
+.members-table tr {
+  background-color: white;
+}
+
+.remove-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e74a3b;
+  color: white;
+}
+
+.remove-btn:hover {
+  background-color: #c0392b;
+}
+.search-section{
+  margin-bottom:10px;
+  
+}
+.search-section select{
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 200px;
+  font-size: 14px;
+}
+.search-section input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 500px;
+  font-size: 14px;
+  margin-left:350px;
+}
+
+.search-section button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-left:5px;
+}
+.open{
+  padding:8px 14px;
+  border:none;
+  border-radius: 6px;
+  font-size:14px;
+  
+}

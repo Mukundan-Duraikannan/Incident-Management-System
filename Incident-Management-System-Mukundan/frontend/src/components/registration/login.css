@@ -1,0 +1,188 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.div-elements {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  background: linear-gradient(to bottom, #0284c7, #0ea5e9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(24px, 4vw, 60px);
+  color: white;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 30px);
+}
+
+.brand-row img {
+  width: clamp(180px, 20vw, 300px);
+  height: auto;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.company-name {
+  font-size: clamp(36px, 4vw, 60px);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: clamp(16px, 2vw, 22px);
+  margin-top: 6px;
+  opacity: 0.9;
+}
+
+.right-panel {
+  flex: 1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(16px, 3vw, 40px);
+}
+
+.box {
+  width: 100%;
+  max-width: 440px;
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+}
+
+.login-font {
+  font-size: clamp(22px, 2.5vw, 32px);
+  text-align: center;
+  margin-bottom: clamp(20px, 3vw, 30px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(14px, 2vw, 18px);
+}
+
+.field label {
+  font-size: clamp(14px, 1.5vw, 16px);
+  margin-bottom: 6px;
+}
+
+.field input {
+  padding: clamp(10px, 1.8vw, 12px);
+  font-size: clamp(14px, 1.5vw, 16px);
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(13px, 1.4vw, 14px);
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.options .div {
+  color: #2563eb;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.options .div:hover {
+  text-decoration: underline;
+}
+
+.button {
+  width: 100%;
+  padding: clamp(10px, 2vw, 12px);
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #1e40af;
+}
+
+@media (max-width: 768px) {
+  .div-elements {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .left-panel {
+    flex: none;
+    min-height: 45vh;
+    padding: 24px;
+  }
+
+  .right-panel {
+    flex: none;
+    min-height: 55vh;
+    padding: 24px;
+  }
+
+  .brand-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .brand-text {
+    align-items: center;
+  }
+
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .left-panel {
+    min-height: 40vh;
+  }
+
+  .right-panel {
+    min-height: 60vh;
+  }
+
+  .box {
+    max-width: 100%;
+  }
+}

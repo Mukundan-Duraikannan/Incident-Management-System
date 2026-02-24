@@ -1,0 +1,110 @@
+.assigned-container {
+    padding: 100px;
+    min-height: 100vh;
+    background: #ffffff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.assigned-container h2 {
+    color: #0284c7;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+.assigned-container table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.assigned-container th {
+    background: #0284c7;
+    color: #ffffff;
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.assigned-container td {
+    padding: 14px;
+    text-align: center;
+    font-size: 14px;
+    color: #1e293b;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.assigned-container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.assigned-container tbody tr:hover {
+    background: #f1f5f9;
+    transition: background 0.2s ease;
+}
+
+.assigned-container td[colspan] {
+    padding: 25px;
+    color: #64748b;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.assigned-container td:nth-child(2) {
+    font-weight: 600;
+    color: #0ea5e9;
+}
+
+.assigned-container td:nth-child(3) {
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.status-select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5f5;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    background-color: #ffffff;
+    font-weight: 500;
+}
+
+.status-select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+}
+
+.priority {
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+@media (max-width: 1024px) {
+    .assigned-container {
+        padding: 60px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .assigned-container {
+        padding: 40px 20px;
+    }
+
+    .assigned-container table {
+        font-size: 13px;
+    }
+
+    .assigned-container th,
+    .assigned-container td {
+        padding: 10px;
+    }
+}
