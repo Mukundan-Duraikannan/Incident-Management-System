@@ -1,0 +1,22 @@
+# Virtual Environment
+Incident/
+venv/
+env/
+Lib/
+Scripts/
+__pycache__/
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+
+# OS
+<<<<<<< HEAD
+.DS_Store
+=======
+.DS_Store
+>>>>>>> f44597da7223eb76200df3cdb77cd29d61304d49
