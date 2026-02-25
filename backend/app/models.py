@@ -36,7 +36,7 @@ class ProjectMember(Base):
 class IssueStatus(enum.Enum):
     Open="Open"
     Assigned="Assigned"
-    InProgress="In Progress"
+    InProgress="InProgress"
     Resolved="Resolved"
     Closed="Closed"
 

@@ -26,11 +26,14 @@ def assign_issue(db:Session,issue_id:int,user_id:int,priority:str):
     db.refresh(issue)
     return issue
 
-def update_status(db:Session,issue_id:int,status,current_user_id:int):
-    issue=get_issue(db,issue_id)
-    if issue.assigned_to!=current_user_id:
-        raise HTTPException(403,"Only assigned developer can update status")
-    issue.status=status
+def update_status(db,issue_id,status:IssueStatus,user_id:int):
+    issue=db.query(Issue).filter(Issue.id==issue_id).first()
+    if not issue:
+        raise HTTPException(status_code=404,detail="Issue not found")
+    try:
+        issue.status=status
+    except KeyError:
+        raise HTTPException(status_code=400,detail="Invalid status")
     db.commit()
     db.refresh(issue)
     return issue

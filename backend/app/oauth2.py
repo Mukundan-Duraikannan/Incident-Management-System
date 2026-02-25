@@ -4,6 +4,7 @@ from . import token
 from .import database
 from sqlalchemy.orm import Session
 from .models import ProjectMember
+from jose import JWTError,jwt
 scheme=OAuth2PasswordBearer(tokenUrl="/login")
 
 def get_current_user(tokenStr:str=Depends(scheme),db:Session=Depends(database.get_db)):
@@ -22,3 +23,15 @@ def project_member_only(project_id: int,db:Session=Depends(database.get_db),user
     if not member:
         raise HTTPException(status_code=403, detail="Not a project member")
     return user
+
+# adding refresh token
+def verify_refresh_token(token:str):
+    try:
+        payload=jwt.decode(token,token.SecretKey,algorithms=[token.Algorithm])
+
+        if payload.get("type")!="refresh":
+            raise HTTPException(401,"Invalid Token Type")
+        return payload
+    except JWTError:
+        raise HTTPException(401,"Invalid token")
+    

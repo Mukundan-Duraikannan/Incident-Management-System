@@ -25,9 +25,9 @@ def get_issue(issue_id:int,db: Session = Depends(get_db),access = Depends(projec
 def assign_issue(issue_id:int,request:IssueAssign,db:Session=Depends(get_db),access=Depends(manager_only)):
     return issue.assign_issue(db,issue_id,request.user_id,request.priority)
 
-@router.put("/{issue_id}/status",response_model=IssueResponse)
-def update_status(issue_id:int,request:IssueStatusUpdate,db:Session=Depends(get_db),access=Depends(project_member_only),user=Depends(get_current_user)):
-    return issue.update_status(db, issue_id, request.status, user.id)
+@router.put("/{issue_id}/status", response_model=IssueResponse)
+def update_status(issue_id:int,request:IssueStatusUpdate,db:Session=Depends(get_db),user=Depends(get_current_user)):
+    return issue.update_status(db,issue_id,request.status,user.id)
 
 @router.get("/project/{project_id}",response_model=list[IssueResponse])
 def project_issues(project_id:int,db:Session=Depends(get_db),access=Depends(project_member_only)):

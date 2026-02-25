@@ -3,6 +3,7 @@ from datetime import datetime,timedelta, timezone
 from .config import settings
 from .import models
 from sqlalchemy.orm import Session
+
 SecretKey=settings.SecretKey
 Algorithm="HS256"
 ExpirationTime=30
@@ -40,3 +41,9 @@ def verify_reset_token(token:str,credentialException):
         return email
     except JWTError:
         raise credentialException
+
+def create_refresh_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(days=7)
+    to_encode.update({"exp": expire, "type": "refresh"})
+    return jwt.encode(to_encode, SecretKey, algorithm=Algorithm)
