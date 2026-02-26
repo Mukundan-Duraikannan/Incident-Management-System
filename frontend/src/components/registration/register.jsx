@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './register.css'
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { authFetch } from '../services/api';
 function Register() {
 
   const navigate = useNavigate();
@@ -11,15 +12,14 @@ function Register() {
   const [password, setPassword] = useState('')
 
   async function handleRegister() {
-    const token = localStorage.getItem("token");
     if (!name || !email || !password) {
       Swal.fire({icon: "error",title: "Registration failed",text: "Enter all the fields"});
       return;
     }
     try {
-      const response = await fetch("http://localhost:8000/user", {
-        method: "POST",
-        headers: {"Content-Type": "application/json","Authorization": `Bearer ${token}`},
+      const response = await authFetch("http://localhost:8000/user",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json"},
         body: JSON.stringify({name: name,email: email,password: password})
       });
 
@@ -29,8 +29,10 @@ function Register() {
         Swal.fire(data.detail || "Registration failed");
         return;
       }
-      Swal.fire("Registration successful. Please reset your password from email.");
-      navigate("/");
+      await Swal.fire("Registration successful.");
+      setName("");
+      setEmail("");
+      setPassword("")
     }
     catch (error) {
       Swal.fire("Server error");

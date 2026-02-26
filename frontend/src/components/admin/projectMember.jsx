@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import './projectMember.css'
+import { authFetch } from "../services/api";
 function ProjectMembers(){
   const {projectId}=useParams();
   const [members,setMembers]=useState([]);
-  const token=localStorage.getItem("token");
+
   useEffect(()=>{
     fetchMembers();
   },[]);
 
   async function fetchMembers() {
     try{
-      const res=await fetch(
-        `http://localhost:8000/projects/${projectId}/members`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+    const res = await authFetch(
+    `http://localhost:8000/projects/${projectId}/members`
+    );
 
       const data=await res.json()
       setMembers(data);

@@ -24,7 +24,7 @@ function AdminDashboard() {
     navigate("/view-project-member");
   }
   const handleLogout=()=>{
-    localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/login")
   }
   const analytics=()=>{

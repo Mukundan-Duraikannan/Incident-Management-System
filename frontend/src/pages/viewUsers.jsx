@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./viewUsers.css";
-
+import { authFetch } from "../components/services/api";
 const ViewUser = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -8,13 +8,7 @@ const ViewUser = () => {
   const token = localStorage.getItem("token");
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:8000/user", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const res = await authFetch("http://localhost:8000/user")
 
       if (!res.ok) throw new Error("Failed to fetch users");
 
@@ -33,14 +27,7 @@ const ViewUser = () => {
     if (!search) return;
 
     try {
-      const res = await fetch(
-        `http://localhost:8000/user/search/${searchType}/${search}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        }
-      );
+      const res = await authFetch(`http://localhost:8000/user/search/${searchType}/${search}`,);
       if (!res.ok) {
         setUsers([]);
         return;
@@ -105,10 +92,10 @@ const ViewUser = () => {
                 <td>
                   <span
                     className={`status ${
-                      user.is_active ? "active" : "inactive"
+                      user.isActive ? "active" : "inactive"
                     }`}
                   >
-                    {user.is_active ? "Active" : "Inactive"}
+                    {user.isActive ? "Active" : "Inactive"}
                   </span>
                 </td>
                 <td>{user.role}</td>

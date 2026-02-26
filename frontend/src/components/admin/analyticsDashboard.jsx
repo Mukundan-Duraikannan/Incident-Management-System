@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {Chart as ChartJS,BarElement,CategoryScale,LinearScale,Tooltip,Legend} from "chart.js";
 import { Bar } from "react-chartjs-2";
 import "./analyticsDashboard.css";
-
+import { authFetch } from "../services/api";
 ChartJS.register(BarElement,CategoryScale,LinearScale,Tooltip,Legend);
 
 function AnalyticsDashboard() {
@@ -13,11 +13,8 @@ function AnalyticsDashboard() {
   const totalIssues = data.reduce((a, b) => a + b.issues, 0);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    fetch("http://localhost:8000/analytics/projects", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+   
+    authFetch("http://localhost:8000/analytics/projects")
       .then(res => res.json())
       .then(d => {
         if (Array.isArray(d)) setData(d);

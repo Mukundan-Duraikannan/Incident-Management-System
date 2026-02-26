@@ -71,7 +71,7 @@ function Login() {
 
       }
 
-      console.log("LOGIN RESPONSE:", data);
+      //console.log("LOGIN RESPONSE:", data);
       if (data.first_login) {
         localStorage.setItem("resetEmail", email);
         Swal.fire({
@@ -82,14 +82,15 @@ function Login() {
         navigate("/reset-password");
         return;
       }
-      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token); 
       localStorage.setItem("role", data.role);
       localStorage.setItem("email", data.email);
       if (rememberMe) {
         localStorage.setItem("rememberEmail", email);
         localStorage.setItem("rememberPassword", password);
       }
-       else 
+      else 
         {
         localStorage.removeItem("rememberEmail");
         localStorage.removeItem("rememberPassword");

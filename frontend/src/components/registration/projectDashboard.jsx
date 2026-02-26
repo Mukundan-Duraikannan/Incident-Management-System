@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./projectDashboard.css";
-
+import { authFetch } from "../services/api";
 function ProjectDashboard() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
   const [role, setRole] = useState("");
 
   useEffect(() => {
@@ -14,10 +14,7 @@ function ProjectDashboard() {
 
   async function fetchMyRole() {
     try {
-      const res = await fetch(
-        `http://localhost:8000/projects/${projectId}/members`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+     const res = await authFetch(`http://localhost:8000/projects/${projectId}/members`);
       const data = await res.json();
 
       if (token) {
@@ -32,8 +29,6 @@ function ProjectDashboard() {
 
   return (
     <div className="layout">
-
-      {/* SIDEBAR */}
       <div className="sidebar">
         <div className="logo">Project</div>
 
@@ -56,10 +51,8 @@ function ProjectDashboard() {
         )}
       </div>
 
-      {/* MAIN */}
       <div className="main">
 
-        {/* HEADER */}
         <div className="topbar">
           <h1>Project Dashboard</h1>
 
@@ -68,7 +61,6 @@ function ProjectDashboard() {
           )}
         </div>
 
-        {/* CONTENT */}
         <div className="content">
           <div className="dashboard-grid">
 

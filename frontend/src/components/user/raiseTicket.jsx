@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Ticket } from "lucide-react";
 import Swal from "sweetalert2";
- 
+import { authFetch } from "../services/api"; 
 function RaiseTicket() {
  
   const { projectId } = useParams();
@@ -37,20 +37,14 @@ function RaiseTicket() {
  
     try {
  
-  const response = await fetch(
-    `http://localhost:8000/issues/project/${projectId}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        title: issue,
-        description: description
-    })
+  const response = await authFetch(
+  `http://localhost:8000/issues/project/${projectId}`,
+  {
+    method:"POST",
+    headers:{ "Content-Type":"application/json"},
+    body: JSON.stringify({ title: issue, description })
   }
-);
+)
  
       if (!response.ok) {
         const errorData = await response.json();

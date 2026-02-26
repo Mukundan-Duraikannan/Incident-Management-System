@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import './assignedIssues.css'
 import { Search, RotateCcw, Pencil, Trash2, Save, X } from "lucide-react";
+import { authFetch } from "../services/api";
 function AssignedIssues() {
   const [issues, setIssues] = useState([]);
-  const token = localStorage.getItem("token");
 const [search, setSearch] = useState("");
   const [searchType, setSearchType] = useState("title");
   useEffect(() => {
@@ -12,11 +12,7 @@ const [search, setSearch] = useState("");
  
   async function fetchAssignedIssues() {
     try {
-      const res = await fetch("http://localhost:8000/issues/assigned/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await authFetch("http://localhost:8000/issues/assigned/me");
       const data = await res.json();
       setIssues(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -26,16 +22,14 @@ const [search, setSearch] = useState("");
  
   async function handleStatusChange(issueId, newStatus) {
     try {
-      const res = await fetch(`http://localhost:8000/issues/${issueId}/status`, {
-  method: "PUT",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`
-  },
-  body: JSON.stringify({
-    status: newStatus
-  })
-});
+     const res = await authFetch(
+  `http://localhost:8000/issues/${issueId}/status`,
+  {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status: newStatus })
+  }
+);
  
       if (!res.ok) throw new Error("Status update failed");
  
@@ -128,13 +122,10 @@ const filteredIssues = issues.filter((issue) => {
                 <td>{issue.description}</td>
  
                 <td>
-                  <select
-  className="status-select"
-  value={issue.status}
-  onChange={(e) =>
-    handleStatusChange(issue.id, e.target.value)
-  }
->
+                  <select className="status-select" value={issue.status} onChange={(e) =>
+                  handleStatusChange(issue.id, e.target.value)
+                }
+              >
   <option value="Assigned">Assigned</option>
   <option value="Open">Open</option>
   <option value="InProgress">InProgress</option>

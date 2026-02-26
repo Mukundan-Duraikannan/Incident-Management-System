@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./viewDashboard.css";
- 
+import { authFetch } from "../services/api"; 
 const ViewDashboard = () => {
   const [issues, setIssues] = useState([]);
   const [filteredIssues, setFilteredIssues] = useState([]);
@@ -11,7 +11,7 @@ const ViewDashboard = () => {
   useEffect(() => {
     const adminId = 1;
  
-    fetch(`http://localhost:8000/dashboard/admin/${adminId}`)
+    authFetch(`http://localhost:8000/dashboard/admin/${adminId}`)
       .then((res) => {
         console.log("Response Status:", res.status);
         if (!res.ok) {

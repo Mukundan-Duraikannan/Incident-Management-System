@@ -1,44 +1,119 @@
-.analytics-container{
-  padding:30px;
-  background:#f0f9ff;
-  min-height:100vh;
-  font-family:Inter,sans-serif;
+/* ── Page ─────────────────────────────────────────── */
+.aa-page {
+  min-height: 100vh;
+  background: #f0f7ff;
+  padding: 36px 48px;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
 }
 
-.analytics-container h2{
-  color:#0369a1;
-  margin-bottom:20px;
+/* ── Header ───────────────────────────────────────── */
+.aa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 36px;
 }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:16px;
-  margin-bottom:30px;
+.aa-eyebrow {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #0369a1;
 }
 
-.stat-card{
-  background:white;
-  padding:20px;
-  border-radius:12px;
-  border-left:4px solid #0369a1;
-  box-shadow:0 8px 18px rgba(0,0,0,0.05);
+.aa-title {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 800;
+  color: #0c2d48;
+  line-height: 1;
 }
 
-.charts{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:20px;
+.aa-badge {
+  background: #0369a1;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 8px 20px;
+  border-radius: 999px;
 }
 
-.chart-box{
-  background:white;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 10px 22px rgba(0,0,0,0.06);
+/* ── Stat Cards ───────────────────────────────────── */
+.aa-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
 }
 
-.chart-box h3{
-  color:#0369a1;
-  margin-bottom:10px;
+.aa-card {
+  background: white;
+  border-radius: 18px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1.5px solid #dbeafe;
+  box-shadow: 0 4px 20px rgba(3, 105, 161, 0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.aa-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(3, 105, 161, 0.14);
+}
+
+.aa-card--blue {
+  background: #0369a1;
+  border-color: #0369a1;
+}
+
+.aa-card--blue .aa-card-value,
+.aa-card--blue .aa-card-label {
+  color: white;
+}
+
+.aa-card-icon { font-size: 24px; }
+
+.aa-card-value {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0c2d48;
+  line-height: 1;
+}
+
+.aa-card-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+/* ── Chart Grid ───────────────────────────────────── */
+.aa-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.aa-chart-box {
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  border: 1.5px solid #dbeafe;
+  box-shadow: 0 4px 20px rgba(3, 105, 161, 0.07);
+}
+
+.aa-chart-box--wide {
+  grid-column: 1 / -1;
+}
+
+.aa-chart-title {
+  margin: 0 0 20px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0c2d48;
 }

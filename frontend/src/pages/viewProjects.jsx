@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./viewProjects.css";
+import { authFetch } from "../components/services/api";
 
 function ViewProjects() {
   const [projects, setProjects] = useState([]);
@@ -8,7 +9,7 @@ function ViewProjects() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch("http://localhost:8000/projects/view");
+      const res = await authFetch("http://localhost:8000/projects");
       if (!res.ok) throw new Error("Failed to fetch projects");
 
       const data = await res.json();
@@ -27,7 +28,7 @@ function ViewProjects() {
     if (!search) return;
 
     try {
-      const res = await fetch(
+      const res = await authFetch(
         `http://localhost:8000/projects/search/${searchType}/${search}`
       );
 

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
 import { FiSearch } from "react-icons/fi";
- 
+import { authFetch } from "../services/api"; 
 function Home() {
   const [projects, setProjects] = useState([]);
   const [search, setSearch] = useState("");
  
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const username = localStorage.getItem("username");
  
@@ -17,11 +16,7 @@ function Home() {
  
   async function fetchProjects() {
     try {
-      const res = await fetch("http://localhost:8000/projects/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await authFetch("http://localhost:8000/projects/");
  
       const data = await res.json();
       setProjects(data);
@@ -31,7 +26,7 @@ function Home() {
   }
  
   function handleLogout() {
-    localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/login");
   }
  

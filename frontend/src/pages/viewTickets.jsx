@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./viewTickets.css";
 import { Search, RotateCcw, Pencil, Trash2, Save, X } from "lucide-react";
- 
+import { authFetch } from "../components/services/api";
 function ViewTickets() {
  
   const { projectId } = useParams();
@@ -29,14 +29,7 @@ const [searchType, setSearchType] = useState("title");
  
     try {
  
-      const res = await fetch(
-        `http://localhost:8000/issues/project/${projectId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await authFetch(`http://localhost:8000/issues/project/${projectId}`);
       const data = await res.json();
       setTickets(Array.isArray(data) ? data : []);
     }
@@ -50,14 +43,7 @@ const [searchType, setSearchType] = useState("title");
  
     try {
  
-      const res = await fetch(
-        `http://localhost:8000/projects/${projectId}/members`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+      const res = await authFetch(`http://localhost:8000/projects/${projectId}/members`);
  
       const data = await res.json();
  
@@ -117,14 +103,9 @@ const [searchType, setSearchType] = useState("title");
  
     try {
  
-      const res = await fetch(
-        `http://localhost:8000/issues/${issueId}/assign?project_id=${projectId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
+      const res = await authFetch(`http://localhost:8000/issues/${issueId}/assign?project_id=${projectId}`,{
+  method:"PUT",
+  headers:{ "Content-Type":"application/json"},
     body: JSON.stringify({
       user_id: parseInt(userId),
       manager_id: payload.user_id,

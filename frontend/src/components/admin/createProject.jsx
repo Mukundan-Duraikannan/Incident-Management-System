@@ -3,13 +3,12 @@ import "./createProject.css";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FolderPlus } from "lucide-react";
- 
+import { authFetch } from "../services/api"; 
 function CreateProject() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
  
@@ -24,17 +23,11 @@ function CreateProject() {
     }
  
     try {
-      const response = await fetch("http://127.0.0.1:8000/projects/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name,
-          description,
-        }),
-      });
+      const response = await authFetch("http://127.0.0.1:8000/projects/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, description }),
+    });
  
       if (!response.ok) {
         throw new Error("Failed to create project");

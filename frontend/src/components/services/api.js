@@ -13,8 +13,8 @@ export const loginUser = async (email, password) => {
     })
   });
    const data = await response.json();
-   localStorage.setItem("access", data.access_token);
-   localStorage.setItem("refresh", data.refresh_token);
+   localStorage.setItem("accessToken", data.access_token);
+   localStorage.setItem("refreshToken", data.refresh_token);
 
   return data;
 };
@@ -67,9 +67,9 @@ export const resetPassword = async (email, otp, newPassword) => {
 };
 
 export const refreshAccessToken = async () => {
-  const refresh = localStorage.getItem("refresh");
+  const refresh = localStorage.getItem("refreshToken");
 
-  const res = await fetch(`${API_URL}/refresh`, {
+  const res = await fetch(`${API_URL}/refresh` ,{
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -78,26 +78,32 @@ export const refreshAccessToken = async () => {
   });
   if (!res.ok) throw new Error("Refresh failed");
   const data = await res.json();
-  localStorage.setItem("access", data.access_token);
+  localStorage.setItem("accessToken", data.access_token);
   return data.access_token;
 };
 
 export const authFetch = async (url, options = {}) => {
-  let access = localStorage.getItem("access");
+  let access = localStorage.getItem("accessToken");
 
-  options.headers = {
-    ...(options.headers || {}),
-    Authorization: `Bearer ${access}`
-  };
-
-  let response = await fetch(url, options);
+  let response = await fetch(url, {
+    ...options,
+    headers: {
+      ...(options.headers || {}),
+      Authorization: `Bearer ${access}`
+    }
+  });
 
   if (response.status === 401) {
     try {
       access = await refreshAccessToken();
 
-      options.headers.Authorization = `Bearer ${access}`;
-      response = await fetch(url, options);
+      response = await fetch(url, {
+        ...options,
+        headers: {
+          ...(options.headers || {}),
+          Authorization: `Bearer ${access}`
+        }
+      });
 
     } catch (err) {
       localStorage.clear();

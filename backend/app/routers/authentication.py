@@ -6,6 +6,11 @@ from sqlalchemy.orm import Session
 from ..import token
 from ..repository import resetPassword
 from jose import jwt,JWTError
+from pydantic import BaseModel
+
+class RefreshRequest(BaseModel):
+    refresh_token:str
+
 router = APIRouter(tags=['Authentication'])
 
 @router.post('/login')
@@ -26,16 +31,16 @@ async def login(request:OAuth2PasswordRequestForm=Depends(),db:Session=Depends(d
 
 
 @router.post("/refresh")
-def refresh_token(refresh_token:str,db:Session=Depends(database.get_db)):
+def refresh_token(req:RefreshRequest, db:Session=Depends(database.get_db)):
     try:
-        payload = jwt.decode(refresh_token, token.SecretKey,algorithms=[token.Algorithm])
+        payload = jwt.decode(req.refresh_token, token.SecretKey,algorithms=[token.Algorithm])
         if payload.get("type")!="refresh":
             raise HTTPException(status_code=401, detail="Invalid token type")
         email=payload.get("sub")
         user=db.query(models.User).filter(models.User.email==email).first()
         if not user:
             raise HTTPException(status_code=404,detail="User not found")
-        new_access=token.create_access_token({"sub":email})
+        new_access = token.create_access_token(data={"user_id": user.id,"role": user.role})
         return {"access_token":new_access}
     except JWTError:
         raise HTTPException(status_code=401,detail="Invalid refresh token")
